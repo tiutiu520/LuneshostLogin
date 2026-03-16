@@ -1,11 +1,9 @@
-#好帅，好帅，认真看代码的你好帅。
-
 name: Daily Website Login
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # 每天 UTC 00:00 运行（北京时间 08:00）
-  workflow_dispatch:  # 允许手动触发测试
+    - cron: '0 0 * * *'  # 每天北京时间 08:00
+  workflow_dispatch:     # 允许手动点击运行
 
 jobs:
   login:
@@ -22,7 +20,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        npm install puppeteer axios node-telegram-bot-api
+        npm install puppeteer axios
 
     - name: Install Puppeteer dependencies
       run: |
@@ -39,9 +37,7 @@ jobs:
       run: node login.js
       env:
         WEBSITE_URL: ${{ secrets.WEBSITE_URL }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PASSWORD: ${{ secrets.PASSWORD }}
-        CAPTCHA_API_KEY: ${{ secrets.CAPTCHA_API_KEY }}
+        USER_COOKIES: ${{ secrets.USER_COOKIES }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       continue-on-error: true
@@ -53,5 +49,3 @@ jobs:
         name: login-debug
         path: login-failure.png
         retention-days: 7
-
-#哥哥下车咯。
